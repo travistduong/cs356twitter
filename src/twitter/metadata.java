@@ -18,13 +18,32 @@ public class metadata {
     private double positivePercentage;
     private ArrayList<String> messages = new ArrayList<>();
     String[] positiveKeywords = {"good", "great", "excellent", "amazing", "cool"};
+    private user lastUserUpdated;
+    
     
     public metadata() {
         userTotal = 0;
         groupTotal = 0;
         messageTotal = 0;
         positivePercentage = 0;
-        
+        lastUserUpdated = null;
+    }
+    
+    
+    
+    public void lastUserUpdated(user u) {
+        if (lastUserUpdated == null) {
+            lastUserUpdated = u;
+        } else {
+            if (u.getLastUpdateTime() > lastUserUpdated.getLastUpdateTime()) {
+                lastUserUpdated = u;
+            }
+        }
+
+    }
+    
+    public user getLastUserUpdated() {
+        return lastUserUpdated;
     }
     
     public void addUser() {

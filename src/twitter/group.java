@@ -19,9 +19,14 @@ public class group implements composite{
     ArrayList<composite> group = new ArrayList<>();
     private String groupID;
     private ImageIcon icon;
-    
+    private long creationTime;
     public group(String id) {
         groupID = id;
+        creationTime = System.currentTimeMillis();
+    }
+    
+    public long getCreationTime() {
+        return creationTime;
     }
 
     public void addToGroup(composite x) {

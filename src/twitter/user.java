@@ -1,7 +1,9 @@
 
 package twitter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
@@ -15,6 +17,8 @@ public class user extends subject implements composite, observer{
     private String tweet;
     private final DefaultListModel listModel = new DefaultListModel();
     private ImageIcon icon;
+    private long creationTime;
+    private long lastUpdateTime;
     ArrayList<user> followers = new ArrayList<>();
     ArrayList<user> followings = new ArrayList<>();
     ArrayList<String> tweets = new ArrayList<>();
@@ -26,6 +30,15 @@ public class user extends subject implements composite, observer{
     
     public user(String x) {
         userID = x;
+        creationTime = System.currentTimeMillis();
+    }
+    
+    public long getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+    
+    public long getCreationTime() {
+        return creationTime;
     }
     
     public DefaultListModel getListModel() {
@@ -61,6 +74,10 @@ public class user extends subject implements composite, observer{
     public void addTweet(String tweet) {
         tweets.add(userID + ": " + tweet);
         this.tweet = tweet;
+        lastUpdateTime = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+        Date date = new Date(lastUpdateTime);
+        System.out.println("[" + getID() + "] last updated: " + sdf.format(date));
         notifyObservers();
     }
     
@@ -94,6 +111,9 @@ public class user extends subject implements composite, observer{
             tweets.add(((user) subject).getID() + ": " + ((user) subject).getLatestTweet());
             // Check the output
             System.out.println(tweets.get(tweets.size() - 1));
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+            Date date = new Date(lastUpdateTime);
+            System.out.println("A user you follow [" + ((user) subject).getID() + "] last updated: " + sdf.format(date));
         }
     }
     
